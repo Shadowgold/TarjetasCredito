@@ -1,0 +1,30 @@
+package com.sample
+ 
+import com.sample.Cliente;
+import com.sample.Tarjeta;
+import com.sample.Pago;
+ 
+rule "Visa"
+    when
+    	c : Cliente(pago == p , tarjeta == t)
+    	t : Tarjeta(nombreT == "Visa")
+    	p : Pago(pago == false)
+    	
+    	
+    then
+    	p.setPago(true);
+        System.out.println( "El cliente " + c.getName() + " tiene Tarjeta Visa: Se realizó el pago" );
+        
+end
+
+rule "Mastercard"
+    when
+    	c : Cliente(tarjeta == t, pago == p)
+    	t : Tarjeta(nombreT == "Mastercard")
+        p : Pago(pago == false)
+    	
+    	
+    then
+    	p.setPago(true);
+        System.out.println( "El cliente " + c.getName() + " tiene Tarjeta Mastercard: No se realizó el pago" );
+end
